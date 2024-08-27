@@ -8,7 +8,8 @@ output: html_document
 # Now let's import our whaling dataset
 ```{r}
 library(readxl)
-Whaling <- read_csv("~/Data_Science_R/Whaling.csv")
+getwd()
+Whaling <- read_csv("../../Reconstruction Assignment/Data/Whaling.csv")
 View(Whaling)
 ```
 
@@ -52,7 +53,7 @@ print(data_long)
 ```
 
 ```{r}
-# Create the line graph
+# Create a line graph
 ggplot(data_long, aes(x = Year, y = Mortality, color = Type, group = Type)) +
   geom_line(size = 1) +
   geom_point(size = 2) +
