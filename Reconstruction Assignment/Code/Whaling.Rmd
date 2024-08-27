@@ -74,3 +74,33 @@ ggplot(data_long, aes(x = Year, y = Mortality, color = Type, group = Type)) +
     axis.title.y = element_text(hjust = 0.5)   # Center the y-axis label
   )
 ```
+
+```{r}
+# Create a line graph
+ggplot(data_long, aes(x = Year, y = Mortality, color = Type, group = Type)) +
+  geom_line(size = 1) +
+  geom_point(size = 2) +
+  labs(
+    title = "Whale Mortality by Type of Whaling",
+    x = "Year",
+    y = "Individuals Mortality",
+    color = "Type of Whaling",
+    caption = "Source: IWC"
+  ) +
+  theme_minimal() +
+  #Changing the legend to account for the countries
+  scale_color_manual(
+    values = c("Traditional" = "#E41A1C", 
+               "Commercial" = "#377EB8", 
+               "Scientific" = "#4DAF4A"),
+    labels = c("Traditional (Denmark, St. Vincent and Grenadines, Russia, USA)", 
+               "Commercial (Norway and Iceland)", 
+               "Scientific (Japan)")
+  ) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.title = element_text(hjust = 0.5),  # Center the title
+    axis.title.x = element_text(hjust = 0.5),  # Center the x-axis label
+    axis.title.y = element_text(hjust = 0.5)   # Center the y-axis label
+  )
+```
