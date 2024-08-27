@@ -61,8 +61,9 @@ ggplot(data_long, aes(x = Year, y = Mortality, color = Type, group = Type)) +
   labs(
     title = "Whale Mortality by Type of Whaling",
     x = "Year",
-    y = "Mortality",
-    color = "Type of Whaling"
+    y = "Individuals Mortality",
+    color = "Type of Whaling",
+    caption = "Source: IWC"
   ) +
   theme_minimal() +
   scale_color_brewer(palette = "Set1") +
