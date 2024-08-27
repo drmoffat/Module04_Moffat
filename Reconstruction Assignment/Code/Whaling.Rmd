@@ -7,6 +7,8 @@ output: html_document
 
 # Now let's import our whaling dataset
 ```{r}
+#install.packages("readr")
+
 library(readxl)
 Whaling <- read_csv("~/Data_Science_R/Whaling.csv")
 View(Whaling)
