@@ -4,4 +4,10 @@ author: "Danielle Moffat"
 date: "2024-08-27"
 output: html_document
 ---
-###
+
+# Now let's import our whaling dataset
+```{r}
+library(readxl)
+Whaling <- read_csv("~/Data_Science_R/Whaling.csv")
+View(Whaling)
+```
