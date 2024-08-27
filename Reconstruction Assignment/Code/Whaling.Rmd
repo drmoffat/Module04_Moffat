@@ -52,20 +52,18 @@ print(data_long)
 ```
 
 ```{r}
-# Create the bar graph
-ggplot(data_long, aes(x = Year, y = Mortality, fill = Type)) +
-  geom_bar(stat = "identity", position = "dodge") +
+# Create the line graph
+ggplot(data_long, aes(x = Year, y = Mortality, color = Type, group = Type)) +
+  geom_line(size = 1) +
+  geom_point(size = 2) +
   labs(
     title = "Whale Mortality by Type of Whaling",
     x = "Year",
     y = "Mortality",
-    fill = "Type of Whaling"
+    color = "Type of Whaling"
   ) +
   theme_minimal() +
-  geom_text(aes(label = round(Mortality, 1)), 
-            position = position_dodge(width = 0.9), 
-            vjust = -0.5) +
-  scale_fill_brewer(palette = "Set1") +
+  scale_color_brewer(palette = "Set1") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
