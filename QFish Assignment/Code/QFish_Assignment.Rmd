@@ -5,9 +5,65 @@ date: "2024-09-09"
 output: html_document
 ---
 
+Load Libraries
 ```{r}
-library(readxl)
-SharkControlData <- read_excel("~/Data_Science_R/Module04_Moffat/QFish Assignment/Data/SharkControlData.xlsx")
-View(SharkControlData)
+library(tidyverse)
+library(ggthemes)
+```
+
+To download data, go to https://qfish.fisheries.qld.gov.au/query/number-caught-by-area-calendar-year-and-species-group/table#
+```{r}
+getwd()
+SharkControlData <- read_excel("../Data/SharkControlData.xlsx")
+```
+
+Data Wrangling
+```{r}
+SharkControlData %>%
+`colnames<-`(.[1, ]) %>% #This pipe means "and also... remove this row"
+  .[-1, ]
+#renaming columns
+names(SharkControlData) <- c("CalendarYear", "SpeciesGroup", "Mammal", "Other", "Shark", "Turtle",
+                              "GrandTotal") 
+
+
+
+
+# Melt the data for plotting
+Shark_long <- SharkControlData %>%
+  pivot_longer(cols = c(Mammal, Other, Shark, Turtle),
+               names_to = "Species",
+               values_to = "Catches")
+
+# Preview the data
+Shark_long
+```
+
+
+```{r}
+# Create a line graph
+ggplot(SharkControlData, aes(x = Year, y = Catches, color = Type, group = Type)) +
+  geom_line(size = 1) +
+  geom_point(size = 2) +
+  labs(
+    title = "Shark Conntrol Program Catch Data",
+    x = "Year",
+    y = "Individuals Caught",
+    color = "Species",
+    caption = "Source: QFish"
+  ) +
+  theme_minimal() +
+  scale_color_brewer(palette = "Set1") +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.title = element_text(hjust = 0.5),  # Center the title
+    axis.title.x = element_text(hjust = 0.5),  # Center the x-axis label
+    axis.title.y = element_text(hjust = 0.5),   # Center the y-axis label
+  ) +
+  scale_y_continuous(
+    limits = c(0, 1500),  # Set Y-axis from 0 to 2500 by creating a vector
+    breaks = seq(0, 1500, 500)  # Define breaks every 500 units for better readability
+  )
+```
 ```
 
