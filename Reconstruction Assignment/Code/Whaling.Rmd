@@ -72,6 +72,10 @@ ggplot(data_long, aes(x = Year, y = Mortality, color = Type, group = Type)) +
     axis.text.x = element_text(angle = 45, hjust = 1),
     plot.title = element_text(hjust = 0.5),  # Center the title
     axis.title.x = element_text(hjust = 0.5),  # Center the x-axis label
-    axis.title.y = element_text(hjust = 0.5)   # Center the y-axis label
+    axis.title.y = element_text(hjust = 0.5),   # Center the y-axis label
+  ) +
+  scale_y_continuous(
+    limits = c(0, 2500),  # Set Y-axis from 0 to 2500 by creating a vector
+    breaks = seq(0, 2500, 500)  # Define breaks every 500 units for better readability
   )
 ```
