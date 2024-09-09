@@ -1,0 +1,13 @@
+---
+title: "SharkControlProgram"
+author: "Danielle Moffat"
+date: "2024-09-09"
+output: html_document
+---
+
+```{r}
+library(readxl)
+SharkControlData <- read_excel("~/Data_Science_R/Module04_Moffat/QFish Assignment/Data/SharkControlData.xlsx")
+View(SharkControlData)
+```
+
