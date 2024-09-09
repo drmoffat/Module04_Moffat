@@ -22,6 +22,7 @@ View(Whaling)
 
 
 # Command Option i is a shortcut for a ```{r} chunk
+# Now I am uploading the data (this is only required if the dataset from excel was unable to import into R studio)
 ```{r}
 # Load necessary libraries
 library(ggplot2)
@@ -71,9 +72,14 @@ ggplot(data_long, aes(x = Year, y = Mortality, color = Type, group = Type)) +
     axis.text.x = element_text(angle = 45, hjust = 1),
     plot.title = element_text(hjust = 0.5),  # Center the title
     axis.title.x = element_text(hjust = 0.5),  # Center the x-axis label
-    axis.title.y = element_text(hjust = 0.5)   # Center the y-axis label
+    axis.title.y = element_text(hjust = 0.5),   # Center the y-axis label
+  ) +
+  scale_y_continuous(
+    limits = c(0, 2500),  # Set Y-axis from 0 to 2500 by creating a vector
+    breaks = seq(0, 2500, 500)  # Define breaks every 500 units for better readability
   )
 ```
+<<<<<<< HEAD
 
 Mistakes:
 
@@ -134,3 +140,5 @@ ggplot(data_long, aes(x = Year, y = Mortality, color = Type, group = Type)) +
     axis.title.y = element_text(hjust = 0.5)   # Center the y-axis label
   )
 ```
+=======
+>>>>>>> a2979629a47434cb75648b09651b8e09d0a162b9
