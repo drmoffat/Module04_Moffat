@@ -9,11 +9,26 @@ Load Libraries
 ```{r}
 library(tidyverse)
 library(ggthemes)
+library(janitor)
 ```
 
 To download data, go to https://qfish.fisheries.qld.gov.au/query/charter-catch-and-effort/table# 
 ```{r}
 getwd()
-CharterFisheryData <- read_excel("QFish Assignment/Data/CharterFisheryData.xlsx")
-View(CharterFisheryData)
+CharterFisheryData <- read_excel("../Data/CharterFisheryData.xlsx") %>%
+row_to_names(row_number = 1) %>% # Variable names are meaningless, so remove
+  clean_names()
 ```
+
+Data Wrangling
+```{r}
+combination <- CharterFisheryData %>%
+  select(na | contains("Combination")) %>%
+  row_to_names(row_number = 1) %>%
+  mutate(across(is.character, as.numeric)) %>%
+  filter(!is.na(CalendarYear))
+
+diving <- CharterFisheryData %>%
+  select(na | contains("diving"))
+```
+
