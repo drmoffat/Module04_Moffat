@@ -1,0 +1,19 @@
+---
+title: "CharterFishery"
+author: "Danielle Moffat"
+date: "2024-09-09"
+output: html_document
+---
+
+Load Libraries
+```{r}
+library(tidyverse)
+library(ggthemes)
+```
+
+To download data, go to https://qfish.fisheries.qld.gov.au/query/charter-catch-and-effort/table# 
+```{r}
+getwd()
+CharterFisheryData <- read_excel("QFish Assignment/Data/CharterFisheryData.xlsx")
+View(CharterFisheryData)
+```
