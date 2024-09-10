@@ -64,16 +64,18 @@ pot <- CharterFisheryData |>
 Creating the line graph - Line-Based Fishery Catch Volume Over Calendar Years
 ```{r}
 summary(line)
-ggplot(line, aes(x = CalendarYear, y = Tonnes)) +
-  geom_line(size = 1) +
-  geom_point(size = 2) +
+line |>
+  filter(!is.na(Licences)) |>
+ggplot(aes(x = CalendarYear, y = Tonnes)) +
+  geom_line(size = 0.5) +
+  geom_point(size = 2, pch = 21, fill = "dodgerblue") +
   labs(
     title = "Line-Based Fishery Catch Volume Over Calendar Years",
     x = "Calendar Year",
     y = "Catch Volume (Tonnes)",
     caption = "Source: QFish"
   ) +
-  theme_minimal() +
+  theme_classic() +
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1),  #Rotate x-axis labels for readability
     plot.title = element_text(hjust = 0.5),  #Center the title
@@ -92,17 +94,18 @@ ggplot(line, aes(x = CalendarYear, y = Tonnes)) +
 
 Creating a line graph 
 ```{r}
-summary(line)
-ggplot(line, aes(x = CalendarYear, y = Days)) +
-  geom_line(size = 1) +
-  geom_point(size = 2) +
+line |>
+  filter(!is.na(Licences)) |>
+ggplot(aes(x = CalendarYear, y = Days)) +
+  geom_line(size = 0.5) +
+  geom_point(size = 2, pch = 21, fill = "dodgerblue") +
   labs(
     title = "Line-Based Fishery Effort Over Calendar Years",
     x = "Calendar Year",
     y = "Fishing Effort (Days)",
     caption = "Source: QFish"
   ) +
-  theme_minimal() +
+  theme_classic() +
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1),  #Rotate x-axis labels for readability
     plot.title = element_text(hjust = 0.5),  #Center the title
@@ -111,11 +114,11 @@ ggplot(line, aes(x = CalendarYear, y = Days)) +
   ) +
     scale_x_continuous(
     breaks = unique(line$CalendarYear),  #Set breaks to each unique year
-    labels = unique(line$CalendarYear)   #Label each break with the year
+    labels = unique(line$CalendarYear),   #Label each break with the year
   ) +
   scale_y_continuous(
-    limits = c(0, 2500),  #Set y-axis limits
-    breaks = seq(0, 1500, 500)  #Define breaks every 500 units for readability
+    limits = c(0, 25000),  #Set y-axis limits
+    breaks = seq(0, 25000, 5000)  #Define breaks every 500 units for readability
   )
 ```
 
