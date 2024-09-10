@@ -10,6 +10,7 @@ Load Libraries
 library(tidyverse)
 library(ggthemes)
 library(janitor)
+library(ggplot2)
 install.packages("shortcuts")
 ```
 
@@ -25,38 +26,98 @@ Data Wrangling
 ```{r}
 combination <- CharterFisheryData |>
   select(na | contains("Combination")) |>  #Select anything that contains 'combination'
-  row_to_names(row_number = 1) |>  #Then make the variable names be this thing from row #1
+  row_to_names(row_number = 1) |>  #Uses values from the first row as the column names (after this operation, the first row is typically removed from the data frame, leaving only the rows with data and new column names)
   mutate(across(is.character, as.numeric)) |>  #If its a character, make it a numeric variable
-  filter(!is.na(CalendarYear))
+  filter(!is.na(CalendarYear))  #Filter out rows where the CalendarYear column has NA values
 
 diving <- CharterFisheryData |>
   select(na | contains("diving")) |> #Select anything that contains 'diving'
-  row_to_names(row_number = 1) |>  #Then make the variable names be this thing from row #1
-  mutate(across(is.character, as.numeric)) |>  #If its a character, make it a numeric variable
+  row_to_names(row_number = 1) |>  
+  mutate(across(is.character, as.numeric)) |>  
   filter(!is.na(CalendarYear))
 
 line <- CharterFisheryData |>
   select(na | contains("line")) |> #Select anything that contains 'line'
-  row_to_names(row_number = 1) |>  #Then make the variable names be this thing from row #1
-  mutate(across(is.character, as.numeric)) |>  #If its a character, make it a numeric variable
+  row_to_names(row_number = 1) |> 
+  mutate(across(is.character, as.numeric)) |>  
   filter(!is.na(CalendarYear))
 
 net <- CharterFisheryData |>
   select(na | contains("net")) |> #Select anything that contains 'net'
-  row_to_names(row_number = 1) |>  #Then make the variable names be this thing from row #1
-  mutate(across(is.character, as.numeric)) |>  #If its a character, make it a numeric variable
+  row_to_names(row_number = 1) |> 
+  mutate(across(is.character, as.numeric)) |>  
   filter(!is.na(CalendarYear))
 
 other <- CharterFisheryData |>
   select(na | contains("other")) |> #Select anything that contains 'other'
-  row_to_names(row_number = 1) |>  #Then make the variable names be this thing from row #1
-  mutate(across(is.character, as.numeric)) |>  #If its a character, make it a numeric variable
+  row_to_names(row_number = 1) |> 
+  mutate(across(is.character, as.numeric)) |>  
   filter(!is.na(CalendarYear))
 
 pot <- CharterFisheryData |>
   select(na | contains("pot")) |> #Select anything that contains 'pot'
-  row_to_names(row_number = 1) |>  #Then make the variable names be this thing from row #1
-  mutate(across(is.character, as.numeric)) |>  #If its a character, make it a numeric variable
-  filter(!is.na(CalendarYear))
+  row_to_names(row_number = 1) |>  
+  mutate(across(is.character, as.numeric)) |>  
+  filter(!is.na(CalendarYear))  
 ```
+
+Creating the line graph - Line-Based Fishery Catch Volume Over Calendar Years
+```{r}
+summary(line)
+ggplot(line, aes(x = CalendarYear, y = Tonnes)) +
+  geom_line(size = 1) +
+  geom_point(size = 2) +
+  labs(
+    title = "Line-Based Fishery Catch Volume Over Calendar Years",
+    x = "Calendar Year",
+    y = "Catch Volume (Tonnes)",
+    caption = "Source: QFish"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),  #Rotate x-axis labels for readability
+    plot.title = element_text(hjust = 0.5),  #Center the title
+    axis.title.x = element_text(hjust = 0.5),  #Center the x-axis label
+    axis.title.y = element_text(hjust = 0.5)   #Center the y-axis label
+  ) +
+    scale_x_continuous(
+    breaks = unique(line$CalendarYear),  #Set breaks to each unique year
+    labels = unique(line$CalendarYear)   #Label each break with the year
+  ) +
+  scale_y_continuous(
+    limits = c(0, 1500),  #Set y-axis limits
+    breaks = seq(0, 1500, 500)  #Define breaks every 500 units for readability
+  )
+```
+
+Creating a line graph 
+```{r}
+summary(line)
+ggplot(line, aes(x = CalendarYear, y = Days)) +
+  geom_line(size = 1) +
+  geom_point(size = 2) +
+  labs(
+    title = "Line-Based Fishery Effort Over Calendar Years",
+    x = "Calendar Year",
+    y = "Fishing Effort (Days)",
+    caption = "Source: QFish"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),  #Rotate x-axis labels for readability
+    plot.title = element_text(hjust = 0.5),  #Center the title
+    axis.title.x = element_text(hjust = 0.5),  #Center the x-axis label
+    axis.title.y = element_text(hjust = 0.5)   #Center the y-axis label
+  ) +
+    scale_x_continuous(
+    breaks = unique(line$CalendarYear),  #Set breaks to each unique year
+    labels = unique(line$CalendarYear)   #Label each break with the year
+  ) +
+  scale_y_continuous(
+    limits = c(0, 2500),  #Set y-axis limits
+    breaks = seq(0, 1500, 500)  #Define breaks every 500 units for readability
+  )
+```
+
+
 
